@@ -37,11 +37,12 @@ function getImageProps(props) {
 }
 
 const CACHED_IMAGE_REF = 'cachedImage';
-
+const DEBUG = false;// __DEV__;
 const CachedImage = React.createClass({
     propTypes: {
         renderImage: React.PropTypes.func.isRequired,
         activityIndicatorProps: React.PropTypes.object.isRequired,
+        showActivityIndicator: React.PropTypes.bool,
         useQueryParamsInCacheKey: React.PropTypes.oneOfType([
             React.PropTypes.bool,
             React.PropTypes.array
@@ -53,7 +54,8 @@ const CachedImage = React.createClass({
         return {
             renderImage: props => (<Image ref={CACHED_IMAGE_REF} {...props}/>),
             activityIndicatorProps: {},
-            useQueryParamsInCacheKey: false,
+            showActivityIndicator: false,
+            useQueryParamsInCacheKey: true,
             resolveHeaders: () => Promise.resolve({})
         };
     },
@@ -143,7 +145,8 @@ const CachedImage = React.createClass({
     },
 
     render() {
-        if (this.state.isCacheable && !this.state.cachedImagePath) {
+      DEBUG && console.log('CachedImage render cachedImagePath', this.state.isCacheable, this.state.cachedImagePath);
+        if (this.props.showActivityIndicator && this.state.isCacheable && !this.state.cachedImagePath) {
             return this.renderLoader();
         }
         const props = getImageProps(this.props);
@@ -151,6 +154,7 @@ const CachedImage = React.createClass({
         const source = (this.state.isCacheable && this.state.cachedImagePath) ? {
                 uri: 'file://' + this.state.cachedImagePath
             } : this.props.source;
+        DEBUG && console.log('CachedImage render source', source, this.props.source.uri);
         return this.props.renderImage({
             ...props,
             style,

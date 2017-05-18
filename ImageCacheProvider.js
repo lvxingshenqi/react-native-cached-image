@@ -12,13 +12,13 @@ const baseCacheDir = fs.dirs.CacheDir + '/imagesCacheDir';
 
 const SHA1 = require("crypto-js/sha1");
 const URL = require('url-parse');
-
+const DEBUG = false;// __DEV__;
 const defaultHeaders = {};
 const defaultImageTypes = ['png', 'jpeg', 'jpg', 'gif', 'bmp', 'tiff', 'tif'];
 const defaultResolveHeaders = _.constant(defaultHeaders);
 
 const defaultOptions = {
-    useQueryParamsInCacheKey: false
+    useQueryParamsInCacheKey: true
 };
 
 const activeDownloads = {};
@@ -71,7 +71,7 @@ function getCachePath(url, options) {
 function getCachedImageFilePath(url, options) {
     const cachePath = getCachePath(url, options);
     const cacheKey = generateCacheKey(url, options);
-
+    DEBUG && console.log('ImageCacheProvider getCachedImageFilePath cacheKey', cacheKey, options, url);
     return `${baseCacheDir}/${cachePath}/${cacheKey}`;
 }
 
@@ -124,6 +124,7 @@ function downloadImage(fromUrl, toFile, headers = {}) {
                     if (Math.floor(res.respInfo.status / 100) !== 2) {
                         throw new Error('Failed to successfully download image');
                     }
+                    DEBUG && console.log('downloadImage', fromUrl, toFile);
                     resolve(toFile);
                 })
                 .catch(err => {
@@ -207,6 +208,7 @@ function isCacheable(url) {
  */
 function getCachedImagePath(url, options = defaultOptions) {
     const filePath = getCachedImageFilePath(url, options);
+    DEBUG && console.log('ImageCacheProvider getCachedImagePath filePath', filePath);
     return fs.stat(filePath)
         .then(res => {
             if (res.type !== 'file') {
@@ -236,6 +238,7 @@ function getCachedImagePath(url, options = defaultOptions) {
  */
 function cacheImage(url, options = defaultOptions, resolveHeaders = defaultResolveHeaders) {
     const filePath = getCachedImageFilePath(url, options);
+    DEBUG && console.log('ImageCacheProvider cacheImage filePath', filePath);
     const dirPath = getDirPath(filePath);
     return ensurePath(dirPath)
         .then(() => resolveHeaders())
