@@ -37,7 +37,7 @@ function getImageProps(props) {
 }
 
 const CACHED_IMAGE_REF = 'cachedImage';
-const DEBUG = false;// __DEV__;
+const DEBUG = __DEV__;
 const CachedImage = React.createClass({
     propTypes: {
         renderImage: React.PropTypes.func.isRequired,
