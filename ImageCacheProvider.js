@@ -12,7 +12,7 @@ const baseCacheDir = fs.dirs.CacheDir + '/imagesCacheDir';
 
 const SHA1 = require("crypto-js/sha1");
 const URL = require('url-parse');
-const DEBUG = false;// __DEV__;
+const DEBUG = __DEV__;
 const defaultHeaders = {};
 const defaultImageTypes = ['png', 'jpeg', 'jpg', 'gif', 'bmp', 'tiff', 'tif'];
 const defaultResolveHeaders = _.constant(defaultHeaders);
