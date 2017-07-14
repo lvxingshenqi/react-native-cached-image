@@ -119,3 +119,6 @@ Deletes all cached images.
 - [url-parse](https://github.com/unshiftio/url-parse) for url handling
 - [crypto-js](https://github.com/brix/crypto-js) for hashing
 - [react-native-fetch-blob](https://github.com/wkh237/react-native-fetch-blob) for downloading and saving images
+
+#### How to Syncing a fork
+https://help.github.com/articles/syncing-a-fork/
