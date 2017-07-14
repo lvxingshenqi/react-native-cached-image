@@ -155,7 +155,7 @@ const CachedImage = React.createClass({
         const source = (this.state.isCacheable && this.state.cachedImagePath) ? {
                 uri: 'file://' + this.state.cachedImagePath
             } : this.props.source;
-        DEBUG && console.log('CachedImage render source', source, this.props.source.uri);
+        DEBUG && console.log('CachedImage render source', source, this.props.source);
         if (this.props.fallbackSource && !this.state.cachedImagePath) {
           return this.props.renderImage({
               ...props,
