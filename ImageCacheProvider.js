@@ -68,7 +68,7 @@ function getCachePath(url, options) {
     return host.replace(/[^a-z0-9]/gi, '').toLowerCase();
 }
 
-function getCachedImageFilePath(url, options) {
+function getCachedImageFilePath(url, options=defaultOptions) {
     const cachePath = getCachePath(url, options);
     const cacheKey = generateCacheKey(url, options);
     DEBUG && console.log('ImageCacheProvider getCachedImageFilePath cacheKey', cacheKey, options, url);
